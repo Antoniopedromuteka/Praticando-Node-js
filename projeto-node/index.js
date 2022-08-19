@@ -75,6 +75,39 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/carros", carros)
 
+app.get("/", (req, res,next)=>{
+    console.log("Eu sou um middleware");
+    next();
+})
+
+app.get("/", (req, res,next)=>{
+    console.log("Eu sou um segundo middleware");
+    next();
+})
+
+app.get("/", (req, res)=>{
+    res.send("<h1>Pagina inicial</h1>");
+})
+
+const userlogged = true;
+
+
+app.get("/restrita", (req, res,next)=>{
+    if(!userlogged) res.redirect("/");
+
+    res.send("rota restrita");
+
+    next();
+})
+
+app.get("/restrita/usuarios", (req, res)=>{
+
+    res.send("rota usuarios");
+
+});
+
+
+
 app.listen(PORT,()=>{
     console.log(`servidor rodando em http://localhost:${PORT}`);
 });
