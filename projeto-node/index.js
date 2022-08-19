@@ -58,6 +58,7 @@
 //     console.log(`servidor rodando em http://${hostname}:${PORT}`);
 // })
 
+const carros = require("./routes/carros");
 
 
 const express = require('express');
@@ -67,11 +68,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //GET, PUT, POST, DELETE
-app.get("/", (req,res)=>{
+// app.get("/", (req,res)=>{
 
-    res.sendFile(__dirname + "/public/index.html");
+//     res.sendFile(__dirname + "/public/index.html");
+// })
 
-})
+app.use("/carros", carros)
 
 app.listen(PORT,()=>{
     console.log(`servidor rodando em http://localhost:${PORT}`);
