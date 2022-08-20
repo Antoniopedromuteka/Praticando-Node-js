@@ -5,6 +5,7 @@ const express = require('express');
 const hbs = require('express-handlebars');
 
 const bodyParser = require('body-parser');
+const session = require("express-session");
 
 const app = express();
 
@@ -23,6 +24,13 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
+//CONGIGURATION SECTIONS
+
+app.use(session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true
+}))
 
 app.use(express.static("public"));
 
@@ -44,7 +52,55 @@ app.get("/editar", (req, res)=>{
 
 
 app.post("/cad", (req, res)=>{
-    res.send(req.body.nome);
+    var nome = req.body.nome;
+    var email = req.body.email;
+
+    const erros = [];
+
+    nome = nome.trim();
+    email = email.trim();
+
+    nome = nome.replace(/[^A-zÀ-ú\s]/gi, "");
+    
+    nome.trim();
+
+         //VERIFICAR SE ESTÁ VAZIO OU NÃO CAMPO
+   if (nome =='' || typeof nome == undefined || nome == null){
+    erros.push({mensagem: "Campo nome não pode ser vazio!"});
+   }
+
+   //VERIFICAR SE O CAMPO NOME É VÁLIDO (APENAS LETRAS)
+   if(!/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+$/.test(nome)){
+    erros.push({mensagem:"Nome inválido!"});
+   }
+
+   //VERIFICAR SE ESTÁ VAZIO OU NÃO CAMPO
+   if (email =='' || typeof email == undefined || email == null){
+    erros.push({mensagem: "Campo email não pode ser vazio!"});
+   }
+
+   //VERIFICAR SE EMAIL É VALIDO
+   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+    erros.push({mensagem:"Campo email inválido!"});
+    }
+
+    if(erros.length > 0){
+        console.log(erros);   
+        
+        req.session.erros = erros;
+        req.session.sucess = false;
+
+        return res.redirect("/")
+    }
+
+
+
+    console.log("validacao realizada com sucesso!");
+
+
+    req.session.sucess = true;
+
+    return res.redirect("/");
 })
 
 
