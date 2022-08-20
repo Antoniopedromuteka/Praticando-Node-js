@@ -18,12 +18,16 @@ app.engine('hbs', hbs.engine({
 app.use(express.static("public"));
 
 app.get("/", (req, res)=>{
-    res.render('index')
+    res.render('index',{navActiveCard: true});
 })
 
 
-app.get("users", (req, res)=>{
-    res.send("users")
+app.get("/users", (req, res)=>{
+    res.render('users',{navActiveUsers: true})
+})
+
+app.get("/editar", (req, res)=>{
+    res.render('editar')
 })
 
 
