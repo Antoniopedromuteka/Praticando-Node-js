@@ -15,10 +15,10 @@ app.engine('hbs', hbs.engine({
 })); app.set('view engine', 'hbs');
 
 
-
+app.use(express.static("public"));
 
 app.get("/", (req, res)=>{
-    res.send("<h1>Olá mundo!</h1>");
+    res.render('index')
 })
 
 
