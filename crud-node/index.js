@@ -22,6 +22,10 @@ app.get("/", (req, res)=>{
 })
 
 
+app.get("users", (req, res)=>{
+    res.send("users")
+})
+
 
 
 app.listen(PORT, ()=>{
