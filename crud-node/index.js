@@ -8,11 +8,11 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-
+// Configuracao basica do handlebars
 app.engine('hbs', hbs.engine({
     extname: 'hbs',
     defaultLayout: "main",
-}))
+})); app.set('view engine', 'hbs');
 
 
 
