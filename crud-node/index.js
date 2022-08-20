@@ -38,6 +38,15 @@ app.use(express.static("public"));
 
 
 app.get("/", (req, res)=>{
+    if(req.session.erros){
+        let arrayErros = req.session.erros;
+        req.session.erros = "";
+        return res.render("index", {navActiveCard: true, error : arrayErros})
+    }
+    if(req.session.sucess){
+        req.session.sucess = false;
+        return res.render("index", {navActiveCard: true, msgSucess: true})
+    }
     res.render('index',{navActiveCard: true});
 })
 
