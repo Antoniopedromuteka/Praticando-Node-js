@@ -2,7 +2,7 @@
 
 const Sequelize = require("sequelize");
 
-const sequelize = new Sequelize("baanco", "usuario", "senha",{
+const sequelize = new Sequelize("node_exemplo", "root", "",{
     host: '127.0.0.1',
     dialect: 'mysql',
     define:{
@@ -12,3 +12,18 @@ const sequelize = new Sequelize("baanco", "usuario", "senha",{
     },
     logging: false
 });
+
+
+
+// sequelize.authenticate().then(()=>{
+
+//     console.log("conectedo no banco com sucesso!");
+
+// }).catch((err)=>{
+//     console.log("falha ao se conectar "+err);
+// })
+
+
+
+
+mmodule.exports = {Sequelize, sequelize}
