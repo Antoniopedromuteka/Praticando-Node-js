@@ -19,6 +19,7 @@ app.engine('hbs', hbs.engine({
 
 // importando models usuarios
 
+const Usuario = require('./models/Usuario')
 
 
 
@@ -105,13 +106,20 @@ app.post("/cad", (req, res)=>{
     }
 
 
-
+    Usuario.create({
+        nome: nome,
+        email: email.toLowerCase(),
+    }).then(()=>{
+        req.session.sucess = true;
+        console.log("usuario cadastrado com sucesso");
+        return res.redirect("/");
+    }).catch((err)=>{
+        console.log("ups alguma coisa deu errado:"+err);
+    })
     console.log("validacao realizada com sucesso!");
 
 
-    req.session.sucess = true;
 
-    return res.redirect("/");
 })
 
 

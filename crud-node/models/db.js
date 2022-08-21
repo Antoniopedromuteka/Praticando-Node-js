@@ -26,4 +26,4 @@ const sequelize = new Sequelize("node_exemplo", "root", "",{
 
 
 
-mmodule.exports = {Sequelize, sequelize}
+module.exports = {Sequelize, sequelize}
