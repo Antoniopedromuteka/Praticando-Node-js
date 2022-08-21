@@ -4,7 +4,9 @@
 
 <div class="p-5 rounded mt-3">
     <h1>Listar usuários</h1>
-     <table class="table table-striped">
+
+  {{#if table}}
+  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#ID</th>
@@ -14,10 +16,11 @@
     </tr>
   </thead>
   <tbody>
+    {{#each usuarios}}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
+      <th scope="row">{{id}}</th>
+      <td>{{nome}}</td>
+      <td>{{email}}</td>
       <td>
         <div class="row g-1">
           <div class="col-6 col-md-3">
@@ -32,6 +35,14 @@
         </div>
       </td>
     </tr>
+    {{/each}}
   </tbody>
 </table>
+{{else}}
+<div class="card mt-4">
+  <div class="card-body">
+    Nenhum dado encontrado!
+  </div>
+</div>
+{{/if}}
   </div>
