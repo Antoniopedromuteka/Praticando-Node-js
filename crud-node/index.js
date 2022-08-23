@@ -203,6 +203,20 @@ app.post("/update", (req, res)=>{
 })
 
 
+app.post("/deletar", (req, res)=>{
+    Usuario.destroy({
+        where:{
+            id: req.body.id,
+        }
+    }).then(()=>{
+        return res.redirect("/users")
+
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+
+
 app.listen(PORT, ()=>{
     console.log('listening on http://localhost:'+PORT);
 })

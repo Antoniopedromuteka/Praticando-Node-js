@@ -33,13 +33,36 @@
           </div>
           <div class="col-6 col-md-3">
 
-            <a href="#" class="btn btn-danger w-100">Deletar</a>
+            <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteModal_{{id}}">Deletar</button>
 
 
           </div>
         </div>
       </td>
     </tr>
+        <!-- Modal -->
+    <div class="modal fade" id="deleteModal_{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body fw-bold text-danger">
+                Tem certeza que querer deletar o usuario {{nome}}?
+          </div>
+          <div class="modal-footer">
+            <form action="/deletar" method="post">
+              <input type="hidden" name="id" value="{{id}}" >
+              <button type="submit" class="btn btn-danger">Sim quero deletar!</button>
+            </form>
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+
     {{/each}}
   </tbody>
 </table>
