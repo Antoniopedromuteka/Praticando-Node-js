@@ -24,7 +24,12 @@
       <td>
         <div class="row g-1">
           <div class="col-6 col-md-3">
-            <a href="#" class="btn btn-info w-100 text-white">Editar</a>
+            <form action="/editar" method="post">
+
+              <input type="hidden"  name="id" value="{{id}}">
+              <button type="submit" class="btn btn-info w-100 text-white">Editar</button>
+            
+            </form>
           </div>
           <div class="col-6 col-md-3">
 

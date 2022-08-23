@@ -19,7 +19,8 @@ app.engine('hbs', hbs.engine({
 
 // importando models usuarios
 
-const Usuario = require('./models/Usuario')
+const Usuario = require('./models/Usuario');
+const { request } = require('express');
 
 
 
@@ -68,8 +69,19 @@ app.get("/users", (req, res)=>{
     
 })
 
-app.get("/editar", (req, res)=>{
-    res.render('editar')
+app.post("/editar", (req, res)=>{
+
+    var id = req.body.id;
+
+ 
+    Usuario.findByPk(id).then((dados)=>{
+        return res.render('editar', {erro: false, id: dados.id, nome: dados.nome, email: dados.email})
+
+    }).catch((err)=>{
+       return res.render('editar', {erro: true, problema: "nao e possivel editar este registro"})
+    });
+
+    // res.render('editar')
 })
 
 
@@ -129,6 +141,64 @@ app.post("/cad", (req, res)=>{
     console.log("validacao realizada com sucesso!");
 
 
+
+})
+
+
+app.post("/update", (req, res)=>{
+    var nome = req.body.nome;
+    var email = req.body.email;
+
+    const erros = [];
+
+    nome = nome.trim();
+    email = email.trim();
+
+    nome = nome.replace(/[^A-zÀ-ú\s]/gi, "");
+    
+    nome.trim();
+
+         //VERIFICAR SE ESTÁ VAZIO OU NÃO CAMPO
+   if (nome =='' || typeof nome == undefined || nome == null){
+    erros.push({mensagem: "Campo nome não pode ser vazio!"});
+   }
+
+   //VERIFICAR SE O CAMPO NOME É VÁLIDO (APENAS LETRAS)
+   if(!/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+$/.test(nome)){
+    erros.push({mensagem:"Nome inválido!"});
+   }
+
+   //VERIFICAR SE ESTÁ VAZIO OU NÃO CAMPO
+   if (email =='' || typeof email == undefined || email == null){
+    erros.push({mensagem: "Campo email não pode ser vazio!"});
+   }
+
+   //VERIFICAR SE EMAIL É VALIDO
+   if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+    erros.push({mensagem:"Campo email inválido!"});
+    }
+
+    if(erros.length > 0){
+        console.log(erros);   
+        
+        return res.status(400).send({status:400, erro:erros});
+    }
+
+
+    Usuario.update({
+        nome: nome,
+        email: email.toLowerCase()
+    },
+    {
+        where:{
+            id: req.body.id,
+        }
+    }
+    ).then(()=>{
+        return res.redirect("/users")
+    }).catch((err)=>{
+        console.log(err);
+    })
 
 })
 
