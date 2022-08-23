@@ -17,7 +17,7 @@ app.engine('hbs', hbs.engine({
     defaultLayout: "main",
 })); app.set('view engine', 'hbs');
 
-// importando models usuarios
+// importando models usuario
 
 const Usuario = require('./models/Usuario');
 const { request } = require('express');
@@ -154,7 +154,7 @@ app.post("/update", (req, res)=>{
     nome = nome.trim();
     email = email.trim();
 
-    nome = nome.replace(/[^A-zÀ-ú\s]/gi, "");
+    nome = nome.replace(/[^A-zÀ-ú\s]/gi,"");
     
     nome.trim();
 
@@ -212,6 +212,7 @@ app.post("/deletar", (req, res)=>{
         return res.redirect("/users")
 
     }).catch((err)=>{
+
         console.log(err);
     })
 })
